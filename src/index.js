@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const cors = require("cors");
 
 const config = require("./shared/config/index");
@@ -9,6 +10,11 @@ const PORT = config.port || 5000;
 // Middlewares
 app.use(express.json());
 app.use(cors());
+
+// Static files for uploaded question images
+app.use("/public", express.static(path.join(__dirname, "../public")));
+// Friendly alias for uploads
+app.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
 
 // Routes
 const router = require("./router");
