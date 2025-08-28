@@ -15,7 +15,7 @@ const isLoggedIn = async (req, res, next) => {
     const token = req.headers.authorization;
 
     if (!token) {
-      throw new UnauthorizedError("Вы не зарегистрированы!");
+      throw new UnauthorizedError("Siz tizimga kirmagansiz!");
     }
 
     const decoded = jwt.verify(token, config.jwt.secret);

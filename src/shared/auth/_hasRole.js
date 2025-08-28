@@ -14,7 +14,7 @@ const hasRole = (roles) => {
       const { role } = req.user;
 
       if (!roles.includes(role)) {
-        throw new ForbiddenError("У вас нет такого права!");
+        throw new ForbiddenError("Sizda bunday huquq yo'q!");
       }
 
       next();
