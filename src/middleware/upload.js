@@ -3,7 +3,14 @@ const path = require("path");
 const fs = require("fs");
 
 function makeUploader(subDir = "questions") {
-  const uploadPath = path.join(__dirname, "..", "..", "public", "uploads", subDir);
+  const uploadPath = path.join(
+    __dirname,
+    "..",
+    "..",
+    "public",
+    "uploads",
+    subDir
+  );
   fs.mkdirSync(uploadPath, { recursive: true });
 
   const storage = multer.diskStorage({
@@ -26,7 +33,11 @@ function makeUploader(subDir = "questions") {
     cb(null, true);
   }
 
-  return multer({ storage, fileFilter, limits: { fileSize: 5 * 1024 * 1024 } }); // 5MB
+  return multer({
+    storage,
+    fileFilter,
+    limits: { fileSize: 20 * 1024 * 1024 },
+  }); // 20MB
 }
 
 const uploadQuestions = makeUploader("questions");
