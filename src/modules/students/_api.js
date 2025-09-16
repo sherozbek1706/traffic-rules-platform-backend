@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const controller = require("./_controller");
-const { mAdmin, mStudent } = require("../../handler/exports");
+const { mAdmin, mStudent, mAllRoles } = require("../../handler/exports");
 const isLoggedIn = require("../../shared/auth/_isLoggedIn");
 
 router.post("/add", mAdmin, controller.add);
@@ -13,6 +13,6 @@ router.post("/login", controller.login);
 router.get("/profile", mStudent, controller.profile);
 router.put("/edit/:id", mAdmin, controller.edit);
 
-router.get("/:id/stats", mAdmin, controller.getStudentStats);
+router.get("/:id/stats", mAllRoles, controller.getStudentStats);
 
 module.exports = router;

@@ -19,7 +19,7 @@ GET http://localhost:5000/api/v1/students/list
 Authorization: {{TOKEN}}
 
 ### get student stats
-GET http://localhost:5000/api/v1/students/4/stats
+GET http://api.avtotestexpress.uz/api/v1/students/2/stats
 Authorization: {{TOKEN}}
 
 ### Edit student

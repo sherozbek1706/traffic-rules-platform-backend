@@ -4,5 +4,6 @@ const isLoggedIn = require("../shared/auth/_isLoggedIn");
 const mSuperAdmin = [isLoggedIn, hasRole(["super_admin"])];
 const mAdmin = [isLoggedIn, hasRole(["super_admin", "admin"])];
 const mStudent = [isLoggedIn, hasRole(["student"])];
+const mAllRoles = [isLoggedIn, hasRole(["student", "super_admin", "admin"])];
 
-module.exports = { mSuperAdmin, mAdmin, mStudent };
+module.exports = { mSuperAdmin, mAdmin, mStudent, mAllRoles };
