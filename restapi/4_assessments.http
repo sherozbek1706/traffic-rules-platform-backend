@@ -1,0 +1,233 @@
+@base = http://localhost:5000/api/v1/assessments
+@json = application/json
+
+# NOTE: Make sure you have a valid admin token in your REST Client env:
+# Authorization: {{TOKEN}}
+
+############################
+# QUESTIONS (CRUD + images)
+############################
+
+### Create a question WITH options (transactional, JSON)
+POST http://localhost:5000/api/v1/assessments/questions/add
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "content": "<p>What is the result of <code>typeof null</code>?</p>",
+  "admin_id": 1,
+  "options": [
+    { "content": "<p>object</p>", "is_correct": true,  "explanation": "Legacy quirk in JS" },
+    { "content": "<p>null</p>",   "is_correct": false },
+    { "content": "<p>undefined</p>", "is_correct": false }
+  ]
+}
+
+### Create a question WITH image (multipart). 'options' is JSON string.
+POST http://localhost:5000/api/v1/assessments/questions/add
+Authorization: {{TOKEN}}
+Content-Type: multipart/form-data; boundary=QBOUNDARY
+
+--QBOUNDARY
+Content-Disposition: form-data; name="content"
+
+<p>Choose a falsy value:</p>
+--QBOUNDARY
+Content-Disposition: form-data; name="admin_id"
+
+1
+--QBOUNDARY
+Content-Disposition: form-data; name="options"
+
+[
+  { "content": "<p>0</p>", "is_correct": false },
+  { "content": "<p>false</p>", "is_correct": true, "explanation": "false is falsy" }
+]
+--QBOUNDARY
+Content-Disposition: form-data; name="image"; filename="sample.png"
+Content-Type: image/png
+
+< ./restapi/sample.png
+--QBOUNDARY--
+
+### List questions (with options)
+GET http://localhost:5000/api/v1/assessments/questions/list?with_options=false
+Authorization: {{TOKEN}}
+
+### Get one question (with options)
+GET http://localhost:5000/api/v1/assessments/questions/one/1
+Authorization: {{TOKEN}}
+
+### Update question (upsert options; update by id, add without id, delete omitted)
+PUT http://localhost:5000/api/v1/assessments/questions/edit/1
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "content": "<p>Pick a falsy value:</p>",
+  "options": [
+    { "id": 2, "content": "<p>0</p>", "is_correct": false },
+    { "id": 3, "content": "<p>false</p>", "is_correct": true, "explanation": "Boolean false is falsy" },
+    { "content": "<p>'' (empty string)</p>", "is_correct": false }
+  ]
+}
+
+### Remove question
+DELETE http://localhost:5000/api/v1/assessments/questions/remove/1
+Authorization: {{TOKEN}}
+
+#####################
+# OPTIONS (CRUD only)
+#####################
+
+### Add option (independent)
+POST http://localhost:5000/api/v1/assessments/options/add
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "question_id": 2,
+  "content": "<p>maybe</p>",
+  "is_correct": true,
+  "explanation": "why not"
+}
+
+### List options (optional filter by question_id)
+GET http://localhost:5000/api/v1/assessments/options/list?question_id=2
+Authorization: {{TOKEN}}
+
+### Get one option
+GET http://localhost:5000/api/v1/assessments/options/one/5
+Authorization: {{TOKEN}}
+
+### Update option
+PUT http://localhost:5000/api/v1/assessments/options/edit/5
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "content": "<p>updated text</p>",
+  "is_correct": false,
+  "explanation": "why"
+}
+
+### Remove option
+DELETE http://localhost:5000/api/v1/assessments/options/remove/5
+Authorization: {{TOKEN}}
+
+#############
+# TESTS CRUD
+#############
+
+### Create test
+POST http://localhost:5000/api/v1/assessments/tests/add
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "title": "JS Basics Quiz",
+  "description": "Intro to JS fundamentals",
+  "time_limit_sec": 900,
+  "admin_id": 1
+}
+
+### List tests
+GET http://localhost:5000/api/v1/assessments/tests/list
+Authorization: {{TOKEN}}
+
+### Get one test (includes linked questions & options)
+GET http://localhost:5000/api/v1/assessments/tests/one/22
+Authorization: {{TOKEN}}
+
+### Update test
+PUT http://localhost:5000/api/v1/assessments/tests/edit/4
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "title": "JS Basics Quiz v2",
+  "description": "Edited",
+  "time_limit_sec": 1200
+}
+
+### Publish test (requires at least one linked question)
+PATCH http://localhost:5000/api/v1/assessments/tests/publish/1
+Authorization: {{TOKEN}}
+
+### Unpublish test
+PATCH http://localhost:5000/api/v1/assessments/tests/unpublish/1
+Authorization: {{TOKEN}}
+
+### Remove test
+DELETE http://localhost:5000/api/v1/assessments/tests/remove/1
+Authorization: {{TOKEN}}
+
+########################
+# TEST-QUESTIONS (links)
+########################
+
+### Attach a question to a test
+POST http://localhost:5000/api/v1/assessments/test-questions/add
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "test_id": 1,
+  "question_id": 1,
+  "order": 1
+}
+
+### Bulk attach questions to a test
+POST http://localhost:5000/api/v1/assessments/test-questions/bulk-add
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "test_id": 1,
+  "question_ids": [2]
+}
+
+### List test-questions by test
+GET http://localhost:5000/api/v1/assessments/test-questions/list?test_id=1
+Authorization: {{TOKEN}}
+
+### Reorder a link
+PUT http://localhost:5000/api/v1/assessments/test-questions/edit/1
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "order": 2
+}
+
+### Remove a link
+DELETE http://localhost:5000/api/v1/assessments/test-questions/remove/1
+Authorization: {{TOKEN}}
+
+#############
+# UPLOADS
+#############
+
+### Upload question image → returns { success: true, url: "/uploads/questions/..." }
+POST http://localhost:5000/api/v1/assessments/uploads/question-image
+Authorization: {{TOKEN}}
+Content-Type: multipart/form-data; boundary=IBOUNDARY
+
+--IBOUNDARY
+Content-Disposition: form-data; name="image"; filename="sample.png"
+Content-Type: image/png
+
+< ./restapi/sample.png
+--IBOUNDARY--
+
+### Upload option image → returns { success: true, url: "/uploads/options/..." }
+POST http://localhost:5000/api/v1/assessments/uploads/option-image
+Authorization: {{TOKEN}}
+Content-Type: multipart/form-data; boundary=OBoundary
+
+--OBoundary
+Content-Disposition: form-data; name="image"; filename="sample.png"
+Content-Type: image/png
+
+< ./restapi/sample.png
+--OBoundary--

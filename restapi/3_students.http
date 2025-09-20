@@ -1,0 +1,85 @@
+// Students module REST examples (use VSCode REST Client or similar)
+
+### Add student (admin token required)
+POST http://localhost:5000/api/v1/students/add
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "first_name": "Ali",
+  "last_name": "Karimov",
+  "phone_number": "+998991112233",
+  "username": "ali.k",
+  "password": "123456",
+  "group_id": 8
+}
+
+### List students
+GET http://localhost:5000/api/v1/students/list
+Authorization: {{TOKEN}}
+
+### get student stats
+GET http://localhost:5000/api/v1/students/4/stats
+Authorization: {{TOKEN}}
+
+### Edit student
+PUT http://localhost:5000/api/v1/students/edit/1
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "first_name": "Ali",
+  "last_name": "Karimov",
+  "phone_number": "+998991112233",
+  "username": "ali.k",
+  "group_id": 9
+}
+
+### Remove student
+DELETE http://localhost:5000/api/v1/students/remove/1
+Authorization: {{TOKEN}}
+
+
+
+### REGISTER student
+POST http://localhost:5000/api/v1/students/register
+Content-Type: application/json
+
+{
+  "first_name": "Ali",
+  "last_name": "Karimov",
+  "phone_number": "+998991112233",
+  "username": "ali.k",
+  "password": "123456",
+  "group_id": 8
+}
+
+
+### LOGIN student
+POST http://localhost:5000/api/v1/students/login
+Content-Type: application/json
+
+{
+  "username": "ali.k",
+  "password": "123456"
+}
+
+
+
+### PROFILE student
+GET http://localhost:5000/api/v1/students/profile
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRfdGltZSI6IjIwMjUtMDktMDdUMTY6NDg6NTQuNzI1WiJ9LCJpYXQiOjE3NTcyNjM3MzQsImV4cCI6MTc1OTg1NTczNH0.8pbsxDR09QL5m0weyEFdaomXZ2c0OYqEn2iJpMAsRu0
+
+
+
+### EDIT student
+PUT http://localhost:5000/api/v1/students/edit
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRfdGltZSI6IjIwMjUtMDktMDdUMTY6NDg6NTQuNzI1WiJ9LCJpYXQiOjE3NTcyNjM3MzQsImV4cCI6MTc1OTg1NTczNH0.8pbsxDR09QL5m0weyEFdaomXZ2c0OYqEn2iJpMAsRu0
+
+{
+  "first_name": "Alibekjonov",
+  "last_name": "Karimov",
+  "phone_number": "+998991112233",
+  "username": "ali.k"
+}
