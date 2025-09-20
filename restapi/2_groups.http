@@ -1,0 +1,31 @@
+### ADD
+POST http://localhost:5000/api/v1/groups/add
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "name": "Chilonzor",
+  "description": "Bu guruhda chilonzor bollari o'qiydi"
+}
+
+### LIST
+GET http://localhost:5000/api/v1/groups/list
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+
+### EDIT with ID
+PUT http://localhost:5000/api/v1/groups/edit/3
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "name": "Chilonzor 6"
+}
+
+
+
+### DELETE with ID
+DELETE http://localhost:5000/api/v1/groups/remove/3
+Content-Type: application/json
+Authorization: {{TOKEN}}

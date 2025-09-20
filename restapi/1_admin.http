@@ -1,0 +1,84 @@
+### ADD
+POST http://localhost:5000/api/v1/admin/add
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+
+{
+  "first_name": "Suxrob",
+  "last_name": "Mamaraximov",
+  "phone_number": "+998938340611",
+  "username":"suxrob",
+  "password": "1234",
+  "role": "admin"
+}
+
+### LOGIN
+POST http://localhost:5000/api/v1/admin/login
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+
+{
+  "username":"sherozbek",
+  "password": "1234"
+}
+
+### LIST
+GET http://localhost:5000/api/v1/admin/list
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+
+### DELETE
+DELETE http://localhost:5000/api/v1/admin/remove/1
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+### EDIT
+PUT http://localhost:5000/api/v1/admin/edit/2
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "first_name": "Suxrobbek",
+  "last_name": "Easulov",
+  "phone_number": "+998938340622",
+  "username":"suxrob",
+  "role": "admin"
+}
+
+
+### Get Profile
+GET http://localhost:5000/api/v1/admin/profile
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+
+### ADD ADMIN TO GROUP
+POST http://localhost:5000/api/v1/admin/add-admin-to-group
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+{
+  "admin_id": "1",
+  "group_id": "4"
+}
+
+
+### LIST GROUP ADMINS
+GET http://localhost:5000/api/v1/admin/list-group-admins
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+
+### REMOVE GROUP ADMINS with ID
+DELETE http://localhost:5000/api/v1/admin/remove-admin-groups/1
+Content-Type: application/json
+Authorization: {{TOKEN}}
+
+
+### MY GROUP with token ID
+GET http://localhost:5000/api/v1/admin/my-group
+Content-Type: application/json
+Authorization: {{TOKEN}}
