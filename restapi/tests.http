@@ -1,0 +1,32 @@
+### New Attempts API test file
+
+### Student Login (example)
+POST http://localhost:5000/api/v1/students/login
+Content-Type: application/json
+
+{
+  "username": "sherozbek",
+  "password": "123456"
+}
+
+### Start a test (by ID)
+POST http://localhost:5000/api/v1/attempts/tests/22/start
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRfdGltZSI6IjIwMjUtMDktMTNUMTM6NDg6MDQuMjE0WiJ9LCJpYXQiOjE3NTc3NzEyODQsImV4cCI6MTc2MDM2MzI4NH0.N7YA9DObFMQIgZi3XzkY2wbjndIaOZwlofYTftQgVzY
+
+### Answer a question (attemptId, question_id, option_id)
+POST http://localhost:5000/api/v1/attempts/attempts/1/answer
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRfdGltZSI6IjIwMjUtMDktMTNUMTM6NDg6MDQuMjE0WiJ9LCJpYXQiOjE3NTc3NzEyODQsImV4cCI6MTc2MDM2MzI4NH0.N7YA9DObFMQIgZi3XzkY2wbjndIaOZwlofYTftQgVzY
+Content-Type: application/json
+
+{
+  "question_id": 1,
+  "option_id": 1
+}
+
+### Finish attempt
+POST http://localhost:5000/api/v1/attempts/attempts/1/finish
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRfdGltZSI6IjIwMjUtMDktMTNUMTM6NDg6MDQuMjE0WiJ9LCJpYXQiOjE3NTc3NzEyODQsImV4cCI6MTc2MDM2MzI4NH0.N7YA9DObFMQIgZi3XzkY2wbjndIaOZwlofYTftQgVzY
+
+### Get attempt details
+GET http://localhost:5000/api/v1/attempts/attempts/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRfdGltZSI6IjIwMjUtMDktMTNUMTM6NDg6MDQuMjE0WiJ9LCJpYXQiOjE3NTc3NzEyODQsImV4cCI6MTc2MDM2MzI4NH0.N7YA9DObFMQIgZi3XzkY2wbjndIaOZwlofYTftQgVzY
