@@ -7,9 +7,15 @@ const Tests = require("./controllers/tests.controller");
 const Questions = require("./controllers/questions.controller");
 const Options = require("./controllers/options.controller");
 const TQ = require("./controllers/testQuestions.controller");
+const Recommendations = require("./controllers/recommendations.controller");
 
 // All endpoints below require admin login
+router.get("/tests/:testId/recommendations", Recommendations.listByTest);
+
 router.use(isLoggedIn);
+router.post("/tests/:testId/recommendations", Recommendations.add);
+router.put("/tests/:testId/recommendations/:id", Recommendations.edit);
+router.delete("/tests/:testId/recommendations/:id", Recommendations.remove);
 
 // Tests
 router.post("/tests/add", Tests.add);
