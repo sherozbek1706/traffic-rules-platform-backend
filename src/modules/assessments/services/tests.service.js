@@ -6,8 +6,18 @@ async function createTest(payload) {
       title: payload.title,
       description: payload.description || null,
       time_limit_sec: payload.time_limit_sec || null,
+      question_limit: payload.question_limit ?? null,
+      randomize_questions:
+        payload.randomize_questions === undefined
+          ? db.raw("randomize_questions")
+          : !!payload.randomize_questions,
       admin_id: payload.admin_id || null,
       is_published: false,
+      question_limit: payload.question_limit || null,
+      randomize_questions:
+        payload.randomize_questions !== undefined
+          ? !!payload.randomize_questions
+          : true,
     })
     .returning([
       "id",
@@ -18,6 +28,8 @@ async function createTest(payload) {
       "is_published",
       "created_at",
       "updated_at",
+      "question_limit",
+      "randomize_questions",
     ]);
   return test;
 }
@@ -124,6 +136,11 @@ async function updateTest(id, payload) {
       title: payload.title,
       description: payload.description || null,
       time_limit_sec: payload.time_limit_sec || null,
+      question_limit: payload.question_limit ?? null,
+      randomize_questions:
+        payload.randomize_questions === undefined
+          ? db.raw("randomize_questions")
+          : !!payload.randomize_questions,
       updated_at: db.fn.now(),
     })
     .returning([
@@ -135,6 +152,8 @@ async function updateTest(id, payload) {
       "is_published",
       "created_at",
       "updated_at",
+      "question_limit",
+      "randomize_questions",
     ]);
   return row || null;
 }
