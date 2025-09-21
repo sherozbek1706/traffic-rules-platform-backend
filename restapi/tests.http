@@ -30,3 +30,59 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJyb2xl
 ### Get attempt details
 GET http://localhost:5000/api/v1/attempts/attempts/1
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjo0LCJyb2xlIjoic3R1ZGVudCIsImNyZWF0ZWRfdGltZSI6IjIwMjUtMDktMTNUMTM6NDg6MDQuMjE0WiJ9LCJpYXQiOjE3NTc3NzEyODQsImV4cCI6MTc2MDM2MzI4NH0.N7YA9DObFMQIgZi3XzkY2wbjndIaOZwlofYTftQgVzY
+
+### --- Tests: create with question_limit & randomize ---
+# Admin token required
+POST http://localhost:5000/api/v1/assessments/tests/add
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+  "title": "Physics A",
+  "description": "Kinetic theory",
+  "time_limit_sec": 1800,
+  "question_limit": 40,
+  "randomize_questions": true
+}
+
+### Edit test to change question_limit/randomize
+PUT http://localhost:5000/api/v1/assessments/tests/edit/1
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+  "title": "Physics A (updated)",
+  "question_limit": 40,
+  "randomize_questions": true
+}
+
+### --- Recommendations ---
+
+# Public (no auth): list recommendations for a test
+GET http://localhost:5000/api/v1/assessments/tests/1/recommendations
+
+# Admin: add recommendation to a test
+POST http://localhost:5000/api/v1/assessments/tests/1/recommendations
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+  "title": "Watch: Newton's Laws",
+  "description": "Great intro to classical mechanics",
+  "video_link": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+}
+
+# Admin: update recommendation
+PUT http://localhost:5000/api/v1/assessments/tests/1/recommendations/3
+Authorization: {{TOKEN}}
+Content-Type: application/json
+
+{
+  "title": "Read: Chapter 3",
+  "description": "Momentum & Impulse",
+  "video_link": null
+}
+
+# Admin: remove recommendation
+DELETE http://localhost:5000/api/v1/assessments/tests/1/recommendations/3
+Authorization: {{TOKEN}}
